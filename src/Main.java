@@ -1,9 +1,13 @@
 import entities.Student;
 import exceptions.ValidationException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Scanner;
 
 public class Main {
+	private static final Logger logger = LoggerFactory.getLogger(Main.class);
+
 	public static void main(String[] args) {
 		// ******************************** ERRORS ********************************************
 		/*
@@ -63,11 +67,26 @@ public class Main {
 		System.out.println("Dammi un nuovo nome per Aldo");
 		String newName = scanner.nextLine();
 
+
+		// Se nello stesso blocco di codice try {} so che si possono presentare più tipi di eccezione posso optare per multipli catch
+		// qualora volessi gestire i diversi tipi di eccezione in maniere diverse
+		// Se invece volessi gestirle tutte alla stessa maniera basta mettere un unico catch(Exception ex){}
+
 		try {
 			aldo.setName(newName);
 		} catch (ValidationException ex) {
-			System.out.println(ex.getMessage());
+			logger.error(ex.getMessage());
 			// ex.printStackTrace();
+		} catch (ArithmeticException ex) {
+			System.out.println("Salvo l'errore nel DB");
+		} catch (NullPointerException | ArrayIndexOutOfBoundsException ex) {
+			System.out.println("Invio email con l'errore a Donald J. Trump");
+		} catch (Exception ex) {
+			System.out.println("Nessuna delle precedenti");
+			ex.printStackTrace();
+		} finally {
+			System.out.println("Il finally viene eseguito a prescindere da eventuali eccezioni");
+			scanner.close(); // Questo blocco serve principalmente per chiudere connessioni, scanner, ecc ecc
 		}
 
 
@@ -77,7 +96,8 @@ public class Main {
 //			System.out.println(e.getMessage());
 //		}
 
-		System.out.println("QUA");
+		logger.info("QUA");
+
 	}
 
 //	public static void print(String string) {
