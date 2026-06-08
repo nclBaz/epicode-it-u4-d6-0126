@@ -1,5 +1,6 @@
 package entities;
 
+import exceptions.StudentNotFoundException;
 import exceptions.ValidationException;
 
 import java.util.Random;
@@ -16,6 +17,14 @@ public class Student {
 		this.id = random.nextInt(1, 1000);
 	}
 
+	public static Student findById(int studentId) throws StudentNotFoundException {
+		// simuliamo la ricerca in db dello studente...
+		Student studentFromDB = new Student("Ajeje", "Brazorf");
+
+		if (studentFromDB != null) return studentFromDB;
+		else throw new StudentNotFoundException(studentId); // Checked
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -25,7 +34,7 @@ public class Student {
 	}
 
 	public void setName(String name) {
-		if (name.length() < 3) throw new ValidationException(name + " è troppo corto!");
+		if (name.length() < 3) throw new ValidationException(name + " è troppo corto!"); // Unchecked
 		this.name = name;
 	}
 

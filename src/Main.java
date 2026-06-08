@@ -1,4 +1,5 @@
 import entities.Student;
+import exceptions.ValidationException;
 
 import java.util.Scanner;
 
@@ -62,7 +63,21 @@ public class Main {
 		System.out.println("Dammi un nuovo nome per Aldo");
 		String newName = scanner.nextLine();
 
-		aldo.setName(newName);
+		try {
+			aldo.setName(newName);
+		} catch (ValidationException ex) {
+			System.out.println(ex.getMessage());
+			// ex.printStackTrace();
+		}
+
+
+//		try {
+//			Student.findById(10);
+//		} catch (StudentNotFoundException e) {
+//			System.out.println(e.getMessage());
+//		}
+
+		System.out.println("QUA");
 	}
 
 //	public static void print(String string) {
